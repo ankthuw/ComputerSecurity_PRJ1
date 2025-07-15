@@ -1,0 +1,151 @@
+[2025-07-15 09:20:12] | test123@gmail.com | Register | Success
+[2025-07-15 09:21:06] | test123@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 09:21:11] | test123@gmail.com | MFA | Success
+[2025-07-15 09:21:19] | test123@gmail.com | RSA | Tạo khóa RSA thành công
+[2025-07-15 09:21:25] | test123@gmail.com | RSA | Kiểm tra trạng thái khóa: Còn hạn
+[2025-07-15 09:21:28] | test123@gmail.com | QR | Tạo QR code thành công
+[2025-07-15 09:21:52] | test123@gmail.com | RSA | Gia hạn khóa thành công
+[2025-07-15 09:21:55] | test123@gmail.com | RSA | Kiểm tra trạng thái khóa: Còn hạn
+[2025-07-15 09:22:00] | test123@gmail.com | RSA | Gia hạn khóa thành công
+[2025-07-15 09:22:03] | test123@gmail.com | RSA | Kiểm tra trạng thái khóa: Còn hạn
+[2025-07-15 09:22:21] | test123@gmail.com | FindPublicKey | Success
+[2025-07-15 09:22:53] | test123@gmail.com | EncryptFile | Success - merged to data/encrypted//test.jpg.enc
+[2025-07-15 09:23:07] | test123@gmail.com | EncryptFile | Success - split to data/encrypted//testOversize.png.enc and data/encrypted//testOversize.png.key
+[2025-07-15 09:23:18] | test123@gmail.com | DecryptFile | Success - decrypted to data/encrypted//decrypted_test.jpg
+[2025-07-15 09:23:30] | test123@gmail.com | DecryptFile | Success - decrypted to data/encrypted//decrypted_testOversize.png
+[2025-07-15 09:24:22] | test123@gmail.com | SignFile | Success - F:/demo/ComputerSecurity_PRJ1-main/ComputerSecurity_PRJ1-main/RELEASE/test image/test.jpg
+[2025-07-15 09:24:34] | test123@gmail.com | VerifySignature | Success - Matched signer key
+[2025-07-15 09:25:11] | test123@gmail.com | UpdateInfo | Cập nhật thông tin không thành công - Ngày sinh không hợp lệ
+[2025-07-15 09:25:34] | test123@gmail.com | UpdateInfo | Cập nhật thông tin thành công
+[2025-07-15 09:25:48] | test123@gmail.com | ChangePass | Success
+[2025-07-15 09:26:08] | test123@gmail.com | RecoverAccount | Khôi phục tài khoản thành công. Hãy đăng nhập lại.
+[2025-07-15 09:26:20] | test123@gmail.com | Login | Failed - Sai passphrase lần 1
+[2025-07-15 09:26:32] | test123@gmail.com | Login | Failed - Sai passphrase lần 2
+[2025-07-15 09:26:49] | test123@gmail.com | RecoverAccount | Khôi phục tài khoản thành công. Hãy đăng nhập lại.
+[2025-07-15 09:27:00] | test123@gmail.com | Login | Failed - Sai passphrase lần 3
+[2025-07-15 09:27:12] | test123@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 09:27:20] | test123@gmail.com | MFA | Success
+[2025-07-15 09:27:38] | admin@gmail.com | Login | Failed - Sai passphrase lần 1
+[2025-07-15 09:27:44] | admin@gmail.com | Login | Failed - Sai passphrase lần 2
+[2025-07-15 09:28:28] | admin@gmail.com | RecoverAccount | Khôi phục tài khoản thành công. Hãy đăng nhập lại.
+[2025-07-15 09:28:39] | admin@gmail.com | Login | Failed - Sai passphrase lần 3
+[2025-07-15 09:29:33] | admin@gmail.com | RecoverAccount | Khôi phục tài khoản thành công. Hãy đăng nhập lại.
+[2025-07-15 09:29:48] | admin@gmail.com | Login | Failed - Sai passphrase lần 4
+[2025-07-15 09:30:27] | admin@gmail.com | RecoverAccount | Khôi phục tài khoản thành công. Hãy đăng nhập lại.
+[2025-07-15 09:30:41] | admin@gmail.com | RecoverAccount | Khôi phục tài khoản thành công. Hãy đăng nhập lại.
+[2025-07-15 09:35:21] | admin@gmail.com | Login | Failed - Sai passphrase lần 5, bị tạm khóa
+[2025-07-15 09:35:42] | admin@gmail.com | RecoverAccount | Khôi phục tài khoản thành công. Hãy đăng nhập lại.
+[2025-07-15 09:35:53] | admin@gmail.com | Login | Blocked - Khóa tạm thời 28 giây
+[2025-07-15 09:36:34] | admin@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 09:36:46] | admin@gmail.com | MFA | Success
+[2025-07-15 09:36:56] | admin@gmail.com | AdminViewUsers | Xem 2 người dùng
+[2025-07-15 09:37:13] | test123@gmail.com | AdminLockUser | Lock tài khoản test123@gmail.com
+[2025-07-15 09:37:16] | admin@gmail.com | AdminViewUsers | Xem 2 người dùng
+[2025-07-15 09:37:20] | admin@gmail.com | AdminViewLog | Đã xem log hệ thống
+[2025-07-15 09:37:44] | test123@gmail.com | Login | Blocked - Tài khoản bị khóa bởi admin
+[2025-07-15 09:38:08] | admin@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 09:38:14] | admin@gmail.com | MFA | Success
+[2025-07-15 09:38:32] | test123@gmail.com | AdminUnlockUser | Unlock tài khoản test123@gmail.com
+[2025-07-15 09:38:33] | admin@gmail.com | AdminViewUsers | Xem 2 người dùng
+[2025-07-15 09:38:44] | test123@gmail.com | Login | Failed - Sai passphrase lần 1
+[2025-07-15 09:38:52] | test123@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 09:38:56] | test123@gmail.com | MFA | Success
+[2025-07-15 09:41:53] | admin@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 09:41:58] | admin@gmail.com | MFA | Failed - Sai mã TOTP
+[2025-07-15 09:42:02] | admin@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 09:42:09] | admin@gmail.com | MFA | Success
+[2025-07-15 09:43:46] | admin@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 09:43:51] | admin@gmail.com | MFA | Success
+[2025-07-15 09:43:59] | admin@gmail.com | ViewProfile | Xem thông tin thành công
+[2025-07-15 09:45:26] | admin@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 09:45:35] | admin@gmail.com | MFA | Success
+[2025-07-15 09:47:07] | admin@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 09:47:15] | admin@gmail.com | MFA | Success
+[2025-07-15 09:47:21] | admin@gmail.com | ViewProfile | Xem thông tin thành công
+[2025-07-15 09:49:55] | admin@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 09:50:00] | admin@gmail.com | MFA | Failed - Sai mã TOTP
+[2025-07-15 09:50:04] | admin@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 09:50:10] | admin@gmail.com | MFA | Success
+[2025-07-15 09:50:14] | admin@gmail.com | ViewProfile | Xem thông tin thành công
+[2025-07-15 09:51:59] | admin@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 09:52:04] | admin@gmail.com | MFA | Success
+[2025-07-15 09:52:08] | admin@gmail.com | ViewProfile | Xem thông tin thành công
+[2025-07-15 09:54:05] | admin | Login | Failed - Email không tồn tại
+[2025-07-15 09:54:15] | admin@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 09:54:20] | admin@gmail.com | MFA | Success
+[2025-07-15 09:54:24] | admin@gmail.com | ViewProfile | Xem thông tin thành công
+[2025-07-15 09:56:01] | admin | Login | Failed - Email không tồn tại
+[2025-07-15 09:56:13] | admin@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 09:56:20] | admin@gmail.com | MFA | Success
+[2025-07-15 09:56:22] | admin@gmail.com | ViewProfile | Xem thông tin thành công
+[2025-07-15 09:57:40] | admin@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 09:57:44] | admin@gmail.com | MFA | Success
+[2025-07-15 09:57:48] | admin@gmail.com | ViewProfile | Xem thông tin thành công
+[2025-07-15 10:01:10] | admin@gmail.com | ViewProfile | Xem thông tin thành công
+[2025-07-15 10:07:14] | admin@gmail.com | ViewProfile | Xem thông tin thành công
+[2025-07-15 11:36:41] | admin@gmail.com | RSA | Tạo khóa RSA thành công
+[2025-07-15 11:36:48] | admin@gmail.com | AdminViewLog | Đã xem log hệ thống
+[2025-07-15 11:39:38] | tester@gmail.com | Register | Success
+[2025-07-15 11:40:10] | tester@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 11:40:20] | tester@gmail.com | MFA | Success
+[2025-07-15 11:40:25] | tester@gmail.com | RSA | Tạo khóa RSA thành công
+[2025-07-15 11:40:28] | tester@gmail.com | RSA | Kiểm tra trạng thái khóa: Còn hạn
+[2025-07-15 11:40:30] | tester@gmail.com | QR | Tạo QR code thành công
+[2025-07-15 11:40:55] | tester@gmail.com | FindPublicKey | Success
+[2025-07-15 11:41:16] | tester@gmail.com | EncryptFile | Success - merged to data/encrypted//test.jpg.enc
+[2025-07-15 11:41:28] | tester@gmail.com | DecryptFile | Success - decrypted to data/encrypted//decrypted_test.jpg
+[2025-07-15 11:42:18] | tester@gmail.com | EncryptFile | Success - split to data/encrypted//testOversize.png.enc and data/encrypted//testOversize.png.key
+[2025-07-15 11:42:28] | tester@gmail.com | DecryptFile | Success - decrypted to data/encrypted//decrypted_testOversize.png
+[2025-07-15 11:43:06] | tester@gmail.com | SignFile | Success - F:/demo/ComputerSecurity_PRJ1-main/ComputerSecurity_PRJ1-main/RELEASE/test image/test.jpg
+[2025-07-15 11:43:18] | tester@gmail.com | VerifySignature | Success - Matched signer key
+[2025-07-15 11:43:24] | tester@gmail.com | ViewProfile | Xem thông tin thành công
+[2025-07-15 11:43:37] | tester@gmail.com | UpdateInfo | Cập nhật thông tin thành công
+[2025-07-15 11:43:40] | tester@gmail.com | ViewProfile | Xem thông tin thành công
+[2025-07-15 11:43:55] | tester@gmail.com | ChangePass | Success
+[2025-07-15 11:44:17] | tester@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 11:44:22] | tester@gmail.com | MFA | Success
+[2025-07-15 11:44:38] | tester@gmail.com | RecoverAccount | Khôi phục tài khoản thành công. Hãy đăng nhập lại.
+[2025-07-15 11:44:52] | tester@gmail.com | Login | Failed - Sai passphrase lần 1
+[2025-07-15 11:44:58] | tester@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 11:45:04] | tester@gmail.com | MFA | Success
+[2025-07-15 11:45:21] | admin@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 11:45:27] | admin@gmail.com | MFA | Success
+[2025-07-15 11:45:32] | admin@gmail.com | ViewProfile | Xem thông tin thành công
+[2025-07-15 11:45:37] | admin@gmail.com | AdminViewUsers | Xem 3 người dùng
+[2025-07-15 11:45:51] | tester@gmail.com | AdminLockUser | Lock tài khoản tester@gmail.com
+[2025-07-15 11:45:56] | admin@gmail.com | AdminViewLog | Đã xem log hệ thống
+[2025-07-15 11:46:11] | tester@gmail.com | Login | Blocked - Tài khoản bị khóa bởi admin
+[2025-07-15 11:46:34] | admin@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 11:46:44] | admin@gmail.com | MFA | Success
+[2025-07-15 11:46:55] | admin@gmail.com | AdminViewUsers | Xem 3 người dùng
+[2025-07-15 11:47:06] | tester@gmail.com | AdminUnlockUser | Unlock tài khoản tester@gmail.com
+[2025-07-15 11:47:20] | tester232@gmail.com | Login | Failed - Email không tồn tại
+[2025-07-15 11:47:25] | tester@gmail.com | Login | Failed - Sai passphrase lần 1
+[2025-07-15 11:47:30] | tester@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 11:47:35] | tester@gmail.com | MFA | Success
+[2025-07-15 11:47:41] | tester@gmail.com | ViewProfile | Xem thông tin thành công
+[2025-07-15 11:47:56] | tester@gmail.com | Login | Failed - Sai passphrase lần 1
+[2025-07-15 11:47:58] | tester@gmail.com | Login | Failed - Sai passphrase lần 2
+[2025-07-15 11:47:59] | tester@gmail.com | Login | Failed - Sai passphrase lần 3
+[2025-07-15 11:48:01] | tester@gmail.com | Login | Failed - Sai passphrase lần 4
+[2025-07-15 11:48:03] | tester@gmail.com | Login | Failed - Sai passphrase lần 5, bị tạm khóa
+[2025-07-15 12:41:03] | tester123@gmail.com | Register | Success
+[2025-07-15 12:42:43] | tester@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 12:44:02] | tester@gmail.com | MFA | Failed - Sai mã TOTP
+[2025-07-15 12:44:06] | tester@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 12:44:11] | tester@gmail.com | MFA | Failed - Sai mã TOTP
+[2025-07-15 12:44:15] | tester@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 12:44:22] | tester@gmail.com | MFA | Failed - Sai mã TOTP
+[2025-07-15 12:44:34] | tester@gmail.com | Login | Failed - Sai passphrase lần 1
+[2025-07-15 12:44:45] | tester@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 12:44:50] | tester@gmail.com | MFA | Success
+[2025-07-15 12:45:36] | admin@gmail.com | Login | Success - Đã xác minh passphrase
+[2025-07-15 12:45:41] | admin@gmail.com | MFA | Success
+[2025-07-15 12:47:18] | admin@gmail.com | RSA | Tạo khóa RSA thành công
+[2025-07-15 12:48:09] | admin@gmail.com | RSA | Kiểm tra trạng thái khóa: Còn hạn
+[2025-07-15 12:48:44] | admin@gmail.com | QR | Tạo QR code thành công
+[2025-07-15 12:50:28] | admin@gmail.com | EncryptFile | Success - merged to data/encrypted//test.jpg.enc
+[2025-07-15 12:50:52] | admin@gmail.com | SignFile | Success - F:/demo/ComputerSecurity_PRJ1-main/ComputerSecurity_PRJ1-main/RELEASE/test image/test.jpg
+[2025-07-15 12:50:55] | admin@gmail.com | ViewProfile | Xem thông tin thành công
+[2025-07-15 12:51:28] | admin@gmail.com | AdminViewUsers | Xem 4 người dùng
+[2025-07-15 12:52:48] | admin@gmail.com | AdminViewLog | Đã xem log hệ thống
