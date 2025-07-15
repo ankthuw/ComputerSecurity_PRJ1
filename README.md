@@ -75,6 +75,9 @@ Sau khi chạy chương trình, giao diện chính sẽ xuất hiện với các
 10. **Ghi log bảo mật:**
     - Tự động ghi lại mọi hành động quan trọng vào `security.log` để giám sát và truy vết.
 
+LIÊN KẾT
+---------
+[Link Video demo (Google Drive)](https://drive.google.com/drive/folders/1PuGn2AbgZ_b0iDku-1wlK-NTxLjEmHZU?usp=drive_link)
 
 PHỤ TRÁCH & TÁC GIẢ
 --------------------
