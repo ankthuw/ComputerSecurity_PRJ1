@@ -7,13 +7,14 @@ class RSAQRFrame(tk.Frame):
     def __init__(self, master):
         super().__init__(master)
         self.pack()
-        tk.Button(self, text="Tạo khóa RSA", width=30, command=self.create_key).pack(pady=5)
-        tk.Button(self, text="Kiểm tra trạng thái khóa", width=30, command=self.check_key).pack(pady=5)
-        tk.Button(self, text="Gia hạn khóa RSA", width=30, command=self.renew_key).pack(pady=5)
-        tk.Button(self, text="Tạo mã QR từ public key", width=30, command=self.generate_qr).pack(pady=5)
-        tk.Button(self, text="Đọc mã QR từ ảnh", width=30, command=self.read_qr).pack(pady=5)
-        tk.Button(self, text="Tìm kiếm public key theo email", width=30, command=self.find_public_key).pack(pady=5)
-        
+        tk.Button(self, text="Tạo khóa RSA", width=35, command=self.create_key).pack(pady=5)
+        tk.Button(self, text="Kiểm tra trạng thái khóa", width=35, command=self.check_key).pack(pady=5)
+        tk.Button(self, text="Gia hạn khóa RSA", width=35, command=self.renew_key).pack(pady=5)
+        tk.Button(self, text="Tạo mã QR từ public key", width=35, command=self.generate_qr).pack(pady=5)
+        tk.Button(self, text="Đọc mã QR từ ảnh", width=35, command=self.read_qr).pack(pady=5)
+        tk.Button(self, text="Tìm kiếm public key theo email", width=35, command=self.find_public_key).pack(pady=5)
+
+    # Hàm lấy thông tin người dùng từ session
     def get_user_session(self):
         email = session.get_email()
         pw = session.get_passphrase()

@@ -1,17 +1,19 @@
 import tkinter as tk
 from tkinter import messagebox, ttk
+from gui.gui_fit import center_window
 from modules import register, login, session
 
 class RegisterLoginFrame(tk.Frame):
     def __init__(self, master, on_login=None):
         super().__init__(master)
         self.on_login = on_login
-        # self.pack()
         tk.Button(self, text="Đăng ký", width=25, command=self.register_view).pack(pady=5)
         tk.Button(self, text="Đăng nhập", width=25, command=self.login_view).pack(pady=5)
         tk.Button(self, text="Quên mật khẩu", width=25, command=self.recovery_view).pack(pady=5)
     def register_view(self):
         win = tk.Toplevel(self)
+        center_window(win)
+        win.geometry("400x500")
         win.title("Đăng ký tài khoản")
 
         fields = [
@@ -72,6 +74,7 @@ class RegisterLoginFrame(tk.Frame):
                     messagebox.showinfo("Đã copy", "Recovery Key đã được sao chép vào clipboard.")
                     
                 popup = tk.Toplevel(win)
+                center_window(popup)
                 popup.title("Recovery Key")
                 popup.geometry("420x210")
                 popup.resizable(False, False)
@@ -100,6 +103,8 @@ class RegisterLoginFrame(tk.Frame):
 
     def login_view(self):
         win = tk.Toplevel(self)
+        center_window(win)
+        win.geometry("400x200")
         win.title("Đăng nhập")
         tk.Label(win, text="Email").grid(row=0, column=0)
         email = tk.Entry(win)
@@ -128,9 +133,12 @@ class RegisterLoginFrame(tk.Frame):
                 messagebox.showwarning("Lỗi", msg)
 
         tk.Button(win, text="Đăng nhập", command=submit).grid(row=2, column=0, columnspan=2, pady=10)
-        
+    
+    # Khôi phục tài khoản
     def recovery_view(self):
         win = tk.Toplevel(self)
+        win.geometry("400x250")
+        center_window(win)
         win.title("Khôi phục tài khoản")
 
         tk.Label(win, text="Email").grid(row=0, column=0)
@@ -158,7 +166,7 @@ class RegisterLoginFrame(tk.Frame):
             ok, msg = account_manager.recover_account(email, key, new_pass)
             if ok:
                 messagebox.showinfo("Thành công", msg)
-                win.destroy()
+                
             else:
                 messagebox.showerror("Thất bại", msg)
 

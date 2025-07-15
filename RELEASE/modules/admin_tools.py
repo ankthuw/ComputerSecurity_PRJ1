@@ -21,12 +21,29 @@ def view_all_users(admin_email):
         users = json.load(f)
         
     info_list = []
-    for email, info in users.items():
+
+    # Hiển thị danh sách người dùng dạng "STT - email - Họ tên - Role - Trạng thái" theo bảng
+    info_list.append("STT - email - Họ tên - Role - Trạng thái")
+    info_list.append("-" * 60)
+    for i, (email, info) in enumerate(users.items(), start=1):
         status = "Đang khóa" if info.get("is_locked", False) else "Đang hoạt động"
-        info = f"{email} - {data.get('name', 'Chưa cập nhật')} - {data.get('role', 'user')} - {status}"
-        info_list.append(info)
+        # info_str format: STT - email - Họ tên - Role - Trạng thái
+        info_str = f"{i} - {email} - {info.get('name', 'Chưa cập nhật')} - {info.get('role', 'user')} - {status}"
+        info_list.append(info_str)
     write_log(admin_email, "AdminViewUsers", f"Xem {len(users)} người dùng")
-    return True, "\n".join(info_list) 
+    return True, "\n".join(info_list)
+
+    # Hiển thị danh sách người dùng dạng "STT - email - Họ tên - Role - Trạng thái" theo dạng bảng excel
+           
+
+
+    # for email, info in users.items():
+    #     status = "Đang khóa" if info.get("is_locked", False) else "Đang hoạt động"
+    #     # info_str format: STT - email - Họ tên - Role - Trạng thái
+    #     info_str = f"{len(info_list) + 1} - {email} - {info.get('name', 'Chưa cập nhật')} - {info.get('role', 'user')} - {status}"
+    #     info_list.append(info_str)
+    # write_log(admin_email, "AdminViewUsers", f"Xem {len(users)} người dùng")
+    # return True, "\n".join(info_list) 
 
 # Khóa hoặc mở khóa tài khoản
 def toggle_user_account(target_email, action):

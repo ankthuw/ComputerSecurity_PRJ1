@@ -22,6 +22,10 @@ def get_passphrase():
 def get_role():
     return current_user.get("role", "user")
 
+def get_recovery_key():
+    return current_user.get("recovery_key")
+
+
 def clear_session():
     global current_user
     current_user = {}

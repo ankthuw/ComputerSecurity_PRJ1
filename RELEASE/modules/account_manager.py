@@ -3,6 +3,7 @@ import json, os, base64
 import hashlib
 from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
+from modules import session
 from modules.logger import write_log
 
 USER_FILE = "data/users.json"
@@ -40,25 +41,41 @@ def reencrypt_private_key(private_key, new_passphrase):
 
 # Đổi passphrase sau khi đăng nhập
 def change_passphrase(email, old_pass, new_pass):
+    '''
+        Quy trình đổi passphrase:
+        1. Kiểm tra email có tồn tại không.
+        2. Kiểm tra passphrase cũ có đúng không.
+        3. Nếu đúng, tiến hành đổi passphrase.
+
+    '''
     with open(USER_FILE, "r") as f:
         users = json.load(f)
 
+    # 1. Kiểm tra email có tồn tại không
     if email not in users:
+        # write_log(email, "ChangePass", "Thay đổi passphrase không thành công - Email không tồn tại")
         return False, "Email không tồn tại."
 
+    # 2. Kiểm tra passphrase cũ có đúng không
     user = users[email]
     salt = base64.b64decode(user["salt"])
     if hash_passphrase(old_pass, salt) != user["pass_hash"]:
+        # write_log(email, "ChangePass", "Thay đổi passphrase không thành công - Sai passphrase cũ")
         return False, "Sai passphrase cũ."
 
+    # 3. Nếu đúng, tiến hành đổi passphrase
     if user.get("rsa_keys"):
+        # Nếu có RSA thì giải mã private key cũ
         ok, priv = decrypt_private_key(user["rsa_keys"]["private_key_encrypted"], old_pass)
         if not ok:
+            # write_log(email, "ChangePass", "Thay đổi passphrase không thành công - Không giải mã được private key cũ")
             return False, "Không giải mã được private key cũ."
 
+        # Mã hóa lại private key với passphrase mới
         new_encrypted = reencrypt_private_key(priv, new_pass)
         user["rsa_keys"]["private_key_encrypted"] = new_encrypted
-
+    
+    # Cập nhật salt và pass_hash mới
     new_salt = os.urandom(16)
     user["salt"] = base64.b64encode(new_salt).decode()
     user["pass_hash"] = hash_passphrase(new_pass, new_salt)
@@ -66,8 +83,43 @@ def change_passphrase(email, old_pass, new_pass):
     with open(USER_FILE, "w") as f:
         json.dump(users, f, indent=2)
 
+    # Cập nhật cho passphrase mới trong session
+    # session.set_user(email, new_pass, user.get("role", "user"))
+
     write_log(email, "ChangePass", "Success")
     return True, "Đã đổi passphrase thành công."
+
+# Xem thông tin người dùng
+def view_profile(email):
+    with open(USER_FILE, "r") as f:
+        users = json.load(f)
+
+    if email not in users:
+        write_log(email, "ViewProfile", "Xem thông tin không thành công - Không tìm thấy người dùng")
+        return False, "Không tìm thấy người dùng."
+
+    user = users[email]
+
+    # Ngày sinh (DD/MM/YYYY)
+    dob = user.get("dob", "")
+    if dob:
+        dob = "/".join(dob.split("-")[::-1])
+
+    # Trạng thái tài khoản
+    account_status = "Đã bị khóa" if user.get("is_locked", False) else "Đang hoạt động"
+
+    profile_info = {
+        "email": email,
+        "Tên": user.get("name", ""),
+        "Ngày sinh": dob,
+        "Số điện thoại": user.get("phone", ""),
+        "Địa chỉ": user.get("address", ""),
+        "Vai trò": user.get("role", "user"),
+        "Trạng thái tài khoản": account_status,
+    }
+
+    write_log(email, "ViewProfile", "Xem thông tin thành công")
+    return True, profile_info
 
 # Sửa thông tin cơ bản
 def update_profile(email, name=None, dob=None, phone=None, address=None):
@@ -75,6 +127,7 @@ def update_profile(email, name=None, dob=None, phone=None, address=None):
         users = json.load(f)
 
     if email not in users:
+        write_log(email, "UpdateInfo", "Cập nhật thông tin không thành công - Không tìm thấy người dùng")
         return False, "Không tìm thấy người dùng."
 
     user = users[email]
@@ -86,7 +139,7 @@ def update_profile(email, name=None, dob=None, phone=None, address=None):
             datetime.strptime(dob, "%Y-%m-%d")
             user["dob"] = dob
         except ValueError:
-            # write_log(email, "UpdateInfo", "InvalidDOB")
+            write_log(email, "UpdateInfo", "Cập nhật thông tin không thành công - Ngày sinh không hợp lệ")
             return False, "Định dạng ngày sinh không hợp lệ. Vui lòng sử dụng YYYY-MM-DD."
     if phone:
         if not phone.isdigit():
@@ -97,7 +150,7 @@ def update_profile(email, name=None, dob=None, phone=None, address=None):
     with open(USER_FILE, "w") as f:
         json.dump(users, f, indent=2)
 
-    write_log(email, "UpdateInfo", "Success")
+    write_log(email, "UpdateInfo", "Cập nhật thông tin thành công")
     return True, "Đã cập nhật thông tin cá nhân."
 
 # Khôi phục tài khoản bằng recovery key
@@ -106,32 +159,36 @@ def recover_account(email, recovery_key, new_passphrase):
         users = json.load(f)
 
     if email not in users:
+        write_log(email, "RecoverAccount", "Khôi phục không thành công - Không tìm thấy người dùng")
         return False, "Không tìm thấy người dùng."
 
     user = users[email]
     if user.get("recovery_key") != recovery_key:
+        write_log(email, "RecoverAccount", "Khôi phục không thành công - Mã khôi phục không hợp lệ")
         return False, "Mã khôi phục không hợp lệ."
 
     # Nếu có RSA thì giải mã → mã hóa lại
     if user.get("rsa_keys"):
-        enc = user["rsa_keys"]["private_key_encrypted"]
-        old_pass = user["pass_hash"]
-        ok, priv = decrypt_private_key(enc, old_pass)
+        enc = user["rsa_keys"]["recovery_key_encrypted"]
+        ok, priv = decrypt_private_key(enc, recovery_key)
         if not ok:
-            return False, "Không thể giải mã private key bằng pass cũ."
+            write_log(email, "RecoverAccount", "Khôi phục không thành công - Không thể giải mã private key")
+            return False, "Không thể giải mã private key bằng recovery key."
 
+        # Mã hóa lại private key với passphrase mới
         new_enc = reencrypt_private_key(priv, new_passphrase)
         user["rsa_keys"]["private_key_encrypted"] = new_enc
-
+  
+    # Cập nhật salt và pass_hash mới
     new_salt = os.urandom(16)
     user["salt"] = base64.b64encode(new_salt).decode()
     user["pass_hash"] = hash_passphrase(new_passphrase, new_salt)
-
+    
     # Vô hiệu hóa recovery key sau 1 lần dùng
     # user["recovery_key"] = None
-
+    
     with open(USER_FILE, "w") as f:
         json.dump(users, f, indent=2)
-
-    write_log(email, "RecoverAccount", "Success")
-    return True, "Khôi phục tài khoản thành công. Hãy lưu lại passphrase mới."
+        
+    write_log(email, "RecoverAccount", "Khôi phục tài khoản thành công. Hãy đăng nhập lại.")
+    return True, "Khôi phục tài khoản thành công. Hãy đăng nhập lại."

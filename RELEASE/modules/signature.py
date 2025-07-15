@@ -66,8 +66,6 @@ def verify_signature(file_path, sig_path):
         signature = base64.b64decode(sig_data["signature"])
         signed_at = sig_data.get("signed_at", "Không rõ thời gian")
         
-        print(f"Verifying signature for {file_path} by {signer_email} at {signed_at}")
-        
         # Load public keys from users.json
         pubkeys = {}
         if os.path.exists(USER_FILE):

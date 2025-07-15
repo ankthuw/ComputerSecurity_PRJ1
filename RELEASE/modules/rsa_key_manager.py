@@ -29,11 +29,16 @@ def generate_rsa_keys(email, passphrase):
     expire_at = (datetime.now() + timedelta(days=90)).isoformat()
 
     # Dùng passphrase tạo AES key để mã hóa private key
-    salt = get_random_bytes(16)
-    aes_key = PBKDF2(passphrase, salt, dkLen=32)
-    cipher = AES.new(aes_key, AES.MODE_EAX)
-    ciphertext, tag = cipher.encrypt_and_digest(private_key)
+    try:
+        salt = get_random_bytes(16)
+        aes_key = PBKDF2(passphrase, salt, dkLen=32)
+        cipher = AES.new(aes_key, AES.MODE_EAX)
+        ciphertext, tag = cipher.encrypt_and_digest(private_key)
+    except Exception as e:
+        write_log(email, "RSA", "Lỗi mã hóa private key: " + str(e))
+        return False, "Lỗi mã hóa private key bằng passphrase."
 
+    # Lưu dữ liệu mã hóa (passphrase)
     encrypted_data = {
         "salt": base64.b64encode(salt).decode(),
         "nonce": base64.b64encode(cipher.nonce).decode(),
@@ -41,9 +46,33 @@ def generate_rsa_keys(email, passphrase):
         "ciphertext": base64.b64encode(ciphertext).decode()
     }
 
+    # Dùng recovery_key để mã hóa private key
+    recovery = users[email].get("recovery_key")
+    if not recovery:
+        write_log(email, "RSA", "Lỗi mã hóa private key: Không tìm thấy recovery key")
+        return False, "Không tìm thấy recovery key."
+    try:
+        salt = get_random_bytes(16)
+        aes_key = PBKDF2(recovery, salt, dkLen=32)
+        cipher = AES.new(aes_key, AES.MODE_EAX)
+        ciphertext, tag = cipher.encrypt_and_digest(private_key)   
+    except Exception as e:
+        write_log(email, "RSA", "Lỗi mã hóa private key bằng recovery key: " + str(e))
+        return False, "Lỗi mã hóa private key bằng recovery key."
+    
+    # Lưu dữ liệu mã hóa (recovery)
+    encrypted_recovery_data = {
+        "salt": base64.b64encode(salt).decode(),
+        "nonce": base64.b64encode(cipher.nonce).decode(),
+        "tag": base64.b64encode(tag).decode(),
+        "ciphertext": base64.b64encode(ciphertext).decode()
+    }
+    
+    
     users[email]["rsa_keys"] = {
         "public_key": base64.b64encode(public_key).decode(),
         "private_key_encrypted": encrypted_data,
+        "recovery_key_encrypted": encrypted_recovery_data,
         "created_at": created_at,
         "expire_at": expire_at
     }

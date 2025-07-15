@@ -1,4 +1,5 @@
 import tkinter as tk
+from gui.gui_fit import center_window
 from gui.gui_register_login import RegisterLoginFrame
 from gui.gui_rsa_qr import RSAQRFrame
 from gui.gui_encrypt_sign import EncryptSignFrame
@@ -9,6 +10,7 @@ class MainGUI(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Hệ thống Bảo mật")
+        center_window(self)
         self.geometry("400x480")
         self.resizable(True, True)
 
@@ -36,6 +38,7 @@ class MainGUI(tk.Tk):
         self.login_frame.pack(pady=20)
 
     def show_dashboard(self):
+
         if self.login_frame:
             self.login_frame.destroy()
             self.login_frame = None
@@ -43,6 +46,10 @@ class MainGUI(tk.Tk):
         role = session.get_role()
         email = session.get_email()
         
+        # Căn chỉnh kích thước cửa sổ
+        self.geometry("400x800")
+        center_window(self)
+
         self.login_label = tk.Label(self, text= f"Đang đăng nhập: {email} ({role})",
                          fg="green", font=("Arial", 10, "italic"))
         self.login_label.pack(pady=5)

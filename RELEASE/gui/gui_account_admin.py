@@ -1,7 +1,9 @@
 import tkinter as tk
 from tkinter import simpledialog, messagebox
+from gui.gui_fit import center_window
 from modules import account_manager, admin_tools, session
 from modules import login
+from modules.logger import write_log
 
 class AccountAdminFrame(tk.Frame):
     def __init__(self, master):
@@ -12,6 +14,7 @@ class AccountAdminFrame(tk.Frame):
         
         if role in ("user", "admin"):
             # for all users
+            tk.Button(self, text="Xem thông tin cá nhân", width=35, command=self.view_profile).pack(pady=3)
             tk.Button(self, text="Cập nhật thông tin cá nhân", width=35, command=self.update_info).pack(pady=3)
             tk.Button(self, text="Đổi passphrase", width=35, command=self.change_pass).pack(pady=3)
             show_any = True
@@ -26,10 +29,35 @@ class AccountAdminFrame(tk.Frame):
         if show_any:
             self.pack()
 
+    def view_profile(self):
+        email = session.get_email()
+        ok, profile_info = account_manager.view_profile(email)
+        
+        if not ok:
+            write_log(email, "ViewProfile", f"Lỗi khi xem thông tin cá nhân: {profile_info}")
+            messagebox.showerror("Lỗi", profile_info)
+            return
+        
+        dialog = tk.Toplevel(self)
+        dialog.geometry("400x300")
+        center_window(dialog)
+        dialog.title("Thông tin cá nhân")
+        dialog.transient(self)
+        dialog.grab_set()
+        
+        # Hiển thị thông tin cá nhân
+        for key, value in profile_info.items():
+            tk.Label(dialog, text=f"{key}: {value}").pack(pady=5)
+        
+        tk.Button(dialog, text="Đóng", command=dialog.destroy).pack(pady=10)
+
+
     def update_info(self):
         email = session.get_email()
         
         dialog = tk.Toplevel(self)
+        dialog.geometry("400x250")
+        center_window(dialog)
         dialog.title("Cập nhật thông tin cá nhân")
         dialog.transient(self)
         dialog.grab_set()
@@ -59,6 +87,8 @@ class AccountAdminFrame(tk.Frame):
         email = session.get_email()
         
         dialog = tk.Toplevel(self)
+        dialog.geometry("400x200")
+        center_window(dialog)
         dialog.title("Đổi Passphrase")
         dialog.transient(self)
         dialog.grab_set()
@@ -85,8 +115,11 @@ class AccountAdminFrame(tk.Frame):
         tk.Button(dialog, text="Xác nhận", command=submit).grid(row=2, column=0, columnspan=2, pady=10)
         dialog.wait_window()
 
+    
     def recover_account(self):
         dialog = tk.Toplevel(self)
+        dialog.geometry("400x250")
+        center_window(dialog)
         dialog.title("Khôi phục tài khoản")
         dialog.transient(self)
         dialog.grab_set()
@@ -117,15 +150,37 @@ class AccountAdminFrame(tk.Frame):
             dialog.destroy()
             
         tk.Button(dialog, text="Xác nhận", command=submit).grid(row=3, column=0, columnspan=2, pady=10)
-        dialog.wait_window()
+        dialog.wait_window() # 
         
     def view_users(self):
         email = session.get_email()
+
         ok, msg = admin_tools.view_all_users(email)
-        messagebox.showinfo("Danh sách người dùng", msg)
+
+        if not ok:
+            write_log(email, "AdminViewUsers", f"Lỗi khi xem danh sách người dùng: {msg}")
+            messagebox.showerror("Lỗi", msg)
+            return 
+        
+        dialog = tk.Toplevel(self)
+        dialog.geometry("600x400")
+        center_window(dialog)
+        dialog.title("Danh sách người dùng")
+        dialog.transient(self)
+        dialog.grab_set()
+        text = tk.Text(dialog, wrap=tk.WORD, width=80, height=20)
+        text.insert(tk.END, msg)
+        text.config(state=tk.DISABLED)  # Chỉ đọc
+        text.pack(padx=10, pady=10)
+        tk.Button(dialog, text="Đóng", command=dialog.destroy).pack(pady=5)
+        dialog.wait_window()
+
+        
+        # messagebox.showinfo("Danh sách người dùng", msg)
         
     def toggle_user(self):
         dialog = tk.Toplevel(self)
+        center_window(dialog)
         dialog.title("Khóa/Mở khóa tài khoản")
         dialog.transient(self)
         dialog.grab_set()
@@ -166,6 +221,8 @@ class AccountAdminFrame(tk.Frame):
             return
         
         log_window = tk.Toplevel(self)
+        log_window.geometry("600x400")
+        center_window(log_window)
         log_window.title("Log hệ thống")
         log_window.transient(self)
         log_window.grab_set()

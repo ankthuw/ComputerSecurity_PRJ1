@@ -8,10 +8,10 @@ class EncryptSignFrame(tk.Frame):
     def __init__(self, master):
         super().__init__(master)
         self.pack()
-        tk.Button(self, text="Mã hóa tập tin", width=30, command=self.encrypt_file).pack(pady=5)
-        tk.Button(self, text="Giải mã tập tin", width=30, command=self.decrypt_file).pack(pady=5)
-        tk.Button(self, text="Ký số tập tin", width=30, command=self.sign_file).pack(pady=5)
-        tk.Button(self, text="Xác minh chữ ký", width=30, command=self.verify_signature).pack(pady=5)
+        tk.Button(self, text="Mã hóa tập tin", width=35, command=self.encrypt_file).pack(pady=5)
+        tk.Button(self, text="Giải mã tập tin", width=35, command=self.decrypt_file).pack(pady=5)
+        tk.Button(self, text="Ký số tập tin", width=35, command=self.sign_file).pack(pady=5)
+        tk.Button(self, text="Xác minh chữ ký", width=35, command=self.verify_signature).pack(pady=5)
 
     def encrypt_file(self):
         sender = session.get_email()

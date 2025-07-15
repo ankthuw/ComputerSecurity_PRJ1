@@ -1,6 +1,8 @@
 import json, os, hashlib, base64, re
 from datetime import datetime
 
+from modules.logger import write_log
+
 USER_FILE = "data/users.json"
 LOG_FILE = "data/security.log"
 
@@ -11,12 +13,6 @@ def generate_salt():
 # Băm passphrase với salt
 def hash_passphrase(passphrase, salt):
     return hashlib.sha256(salt + passphrase.encode()).hexdigest()
-
-# Ghi log hành động
-def write_log(email, action, status):
-    os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
-    with open(LOG_FILE, "a", encoding="utf-8") as f:
-        f.write(f"{datetime.now()} | {email} | {action} | {status}\n")
 
 # Hàm đăng ký
 def register_user(email, name, dob, phone, address, passphrase):

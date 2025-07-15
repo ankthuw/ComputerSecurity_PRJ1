@@ -85,6 +85,7 @@ def encrypt_file(sender_email, recipient_email, file_path, merge=True):
 # Giải mã file
 def decrypt_file(recipient_email, passphrase, enc_path, key_path=None):
     if not os.path.exists(enc_path):
+        write_log(recipient_email, "DecryptFile", "Giải mã file không thành công - File không tồn tại")
         return False, "Không tìm thấy file mã hóa (.enc)."
 
     with open(USER_FILE, "r", encoding="utf-8") as f:
@@ -92,6 +93,7 @@ def decrypt_file(recipient_email, passphrase, enc_path, key_path=None):
 
     user = users.get(recipient_email)
     if not user or not user.get("rsa_keys"):
+        write_log(recipient_email, "DecryptFile", "Giải mã file không thành công - Người dùng không tồn tại hoặc chưa có khóa")
         return False, "Người dùng không tồn tại hoặc chưa có khóa."
 
     # Giải mã private key
@@ -99,6 +101,7 @@ def decrypt_file(recipient_email, passphrase, enc_path, key_path=None):
     enc_data = user["rsa_keys"]["private_key_encrypted"]
     ok, priv_bytes = decrypt_private_key(enc_data, passphrase)
     if not ok:
+        write_log(recipient_email, "DecryptFile", "Giải mã file không thành công - Sai passphrase hoặc không giải mã được private key")
         return False, "Sai passphrase hoặc không giải mã được private key."
 
     privkey = RSA.import_key(priv_bytes)
@@ -128,7 +131,7 @@ def decrypt_file(recipient_email, passphrase, enc_path, key_path=None):
     try:
         session_key = rsa_cipher.decrypt(encrypted_session_key)
     except Exception as e:
-        write_log(recipient_email, "DecryptFile", f"Fail - RSA Decrypt Error: {e}")
+        write_log(recipient_email, "DecryptFile", "Giải mã file không thành công - Không thể giải mã khóa phiên. Chi tiết: " + str(e))
         return False, f"Không thể giải mã khóa phiên.\nChi tiết: {e}"
     
     decrypted = b""

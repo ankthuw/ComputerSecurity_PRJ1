@@ -2,9 +2,13 @@ import os
 from PIL import Image, ImageTk
 import tkinter as tk
 
+from gui.gui_fit import center_window
+
 def show_qr_popup(qr_path, title, message):
     """Hiển thị mã QR trong một popup."""
     popup = tk.Toplevel()
+    popup.geometry("600x600")
+    center_window(popup)
     popup.title(title)
     
     label = tk.Label(popup, text=message)
@@ -27,6 +31,8 @@ def show_qr_popup(qr_path, title, message):
     
 def show_qr_with_text(title_text, info_text, qr_path=None):
     win = tk.Toplevel()
+    win.geometry("600x600")
+    center_window(win)
     win.title(title_text)
     
     # Hiển thị thông tin văn bản
